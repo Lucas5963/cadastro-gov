@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cadastre Para Ganhar</title>
+    <title>Cadastro GOV.COM</title>
     <link rel="stylesheet" href="style.css">
     <!-- Adicionando Google Fonts para a fonte Cinzel -->
     <link href="https://fonts.googleapis.com/css2?family=Cinzel&display=swap" rel="stylesheet">
@@ -11,11 +11,11 @@
 <body>
     <header>
         <h1>Preencha os dados corretamente</h1>
-        <p>Por aqui temos a possibilidade de te enviar um pack de cartas para voce batalhar com uma certa vantagem.</p>
+        <p>Dados para consulta no <span>GOV</span>.</p>
     </header>
     
     <section class="container">
-        <h2>Cadastro para o envio</h2>
+        <h2>Cadastro</h2>
         <form id="cadastroForm">
             <label for="nome">Nome:</label>
             <input type="text" id="nome" required>
@@ -33,8 +33,7 @@
             <input type="text" id="nomeUsuario" required>
 
             <div class="botoes">
-                <a href="https" class="animated-button">
-                    Salvar
+                <a class="animated-button" href="#" onclick="abrirPopup()">Salvar</a>,
                     <span></span>
                     <span></span>
                     <span></span>
@@ -45,7 +44,26 @@
     </section>
 
     <footer>
-        <p>© 2025 Promoções Magic. Todos os direitos reservados.</p>
+        <p>© 2025 Consulta GOV.COM. Todos os direitos reservados.</p>
     </footer>
+
+    <div id="popup" class="popup">
+  <div class="popup-box">
+    <p>Salvo com sucesso!</p>
+    <a href="https://wa.me/21990266377?text=Ola Finalizei meu cadastro, QUERO PROSSEGUIR" target="_blank">Clique aqui para ir ao WhatsApp</a>
+    <button onclick="fecharPopup()">Fechar</button>
+  </div>
+</div>
+
+<script>
+function abrirPopup() {
+    document.getElementById("popup").style.display = "flex";
+}
+
+function fecharPopup() {
+    document.getElementById("popup").style.display = "none";
+}
+</script>
+
 </body>
 </html>
