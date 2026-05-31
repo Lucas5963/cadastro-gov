@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="br">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -93,20 +93,44 @@
             Trilhas Disponíveis
         </h2>
 
-        <div class="trail-card" onclick="abrirTrilha()">
+        <div class="trail-card" onclick="abrirTrilha('informatica')">
+    <div class="trail-icon">🖥️</div>
+    <div>
+        <h3>Informática Básica</h3>
+        <p>Fundamentos do computador</p>
+    </div>
+</div>
 
-            <div class="trail-icon">
-                🖥️
-            </div>
+<div class="trail-card" onclick="abrirTrilha('word')">
+    <div class="trail-icon">📝</div>
+    <div>
+        <h3>Word Básico</h3>
+        <p>Documentos e formatação</p>
+    </div>
+</div>
 
-            <div>
-                <h3>Informática Básica</h3>
-                <p>
-                    Fundamentos do computador,
-                    mouse, teclado e Windows.
-                </p>
-            </div>
+<div class="trail-card" onclick="abrirTrilha('excel')">
+    <div class="trail-icon">📊</div>
+    <div>
+        <h3>Excel Básico</h3>
+        <p>Planilhas e fórmulas</p>
+    </div>
+</div>
 
+<div class="trail-card" onclick="abrirTrilha('internet')">
+    <div class="trail-icon">🌐</div>
+    <div>
+        <h3>Internet e E-mail</h3>
+        <p>Navegação e comunicação</p>
+    </div>
+</div>
+
+<div class="trail-card" onclick="abrirTrilha('seguranca')">
+    <div class="trail-icon">🔒</div>
+    <div>
+        <h3>Segurança Digital</h3>
+        <p>Proteção online</p>
+    </div>
         </div>
 
     </main>
@@ -225,42 +249,17 @@
 
     <main>
 
-        <div class="quiz-card">
+       <div class="quiz-card">
 
-            <h2>
-                Quiz Final
-            </h2>
+    <h2>Quiz Final</h2>
 
-            <p>
-                O que é hardware?
-            </p>
+    <div id="quizContainer"></div>
 
-            <label class="option">
-                <input type="radio"
-                    name="quiz"
-                    value="0">
-                Programas instalados
-            </label>
+    <button onclick="corrigirQuiz()">
+        Enviar Resposta
+    </button>
 
-            <label class="option">
-                <input type="radio"
-                    name="quiz"
-                    value="1">
-                Partes físicas do computador
-            </label>
-
-            <label class="option">
-                <input type="radio"
-                    name="quiz"
-                    value="2">
-                Internet
-            </label>
-
-            <button onclick="corrigirQuiz()">
-                Enviar Respostas
-            </button>
-
-        </div>
+</div>
 
     </main>
 
