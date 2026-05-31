@@ -261,7 +261,9 @@ margin-top:10px;
 cursor:pointer;
 }
 
-.option:hover
+.option:hover{
+background:#1e355d;
+}
 
 .hidden{
 display:none;
