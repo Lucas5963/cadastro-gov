@@ -1,33 +1,123 @@
-let pontos = 0;
-let modulosConcluidos = 0;
+let pontos = parseInt(localStorage.getItem("pontos")) || 0;
+let modulosConcluidos = parseInt(localStorage.getItem("modulosConcluidos")) || 0;
+
+const totalModulos = 5;
+
+const perguntas = [
+{
+pergunta:"O que é hardware?",
+opcoes:["Programas","Partes físicas","Internet","Windows"],
+correta:1
+},
+{
+pergunta:"Qual componente realiza cálculos?",
+opcoes:["Monitor","Mouse","CPU","Teclado"],
+correta:2
+},
+{
+pergunta:"O que é software?",
+opcoes:["Programa","Teclado","Mouse","Monitor"],
+correta:0
+},
+{
+pergunta:"Qual tecla copia texto?",
+opcoes:["Ctrl+V","Ctrl+C","Ctrl+X","Ctrl+Z"],
+correta:1
+},
+{
+pergunta:"O Windows é um:",
+opcoes:["Jogo","Sistema Operacional","Antivírus","Site"],
+correta:1
+},
+{
+pergunta:"Qual extensão do Word?",
+opcoes:[".xlsx",".docx",".jpg",".exe"],
+correta:1
+},
+{
+pergunta:"Qual símbolo inicia fórmula no Excel?",
+opcoes:["#","=","$","&"],
+correta:1
+},
+{
+pergunta:"O que é SSD?",
+opcoes:["Memória","Armazenamento rápido","Monitor","Processador"],
+correta:1
+},
+{
+pergunta:"O que é phishing?",
+opcoes:["Golpe online","Programa","Mouse","Planilha"],
+correta:0
+},
+{
+pergunta:"Uma senha forte deve:",
+opcoes:[
+"Ter apenas números",
+"Ser curta",
+"Ter letras, números e símbolos",
+"Ter apenas letras"
+],
+correta:2
+}
+];
+
+let perguntaAtual = 0;
 
 function mostrarTela(id){
 
+document
+.querySelectorAll(".screen")
+.forEach(tela => tela.classList.remove("active"));
 
 document
-    .querySelectorAll(".screen")
-    .forEach(tela => tela.classList.remove("active"));
+.getElementById(id)
+.classList.add("active");
 
-document
-    .getElementById(id)
-    .classList.add("active");
+}
+function carregarPergunta() {
 
+    const pergunta = perguntas[perguntaAtual];
 
+    let html = `
+        <p>${pergunta.pergunta}</p>
+    `;
+
+    pergunta.opcoes.forEach((opcao, index) => {
+
+        html += `
+        <label class="option">
+            <input type="radio"
+                   name="quiz"
+                   value="${index}">
+            ${opcao}
+        </label>
+        `;
+
+    });
+
+    document.getElementById("quizContainer")
+        .innerHTML = html;
 }
 
 function fazerLogin(){
 
-
 const nome =
-    document.getElementById("nome").value;
+document.getElementById("nome").value;
 
 const email =
-    document.getElementById("email").value;
+document.getElementById("email").value;
 
 if(nome.trim() === ""){
 
-    alert("Digite seu nome");
-    return;
+alert("Digite seu nome");
+return;
+
+}
+
+if(email.trim() === ""){
+
+alert("Digite seu e-mail");
+return;
 
 }
 
@@ -35,13 +125,12 @@ localStorage.setItem("usuarioNome", nome);
 localStorage.setItem("usuarioEmail", email);
 
 document.getElementById("userName").textContent =
-    nome;
+nome;
 
 document.getElementById("welcomeText").textContent =
-    `Olá, ${nome} 👋`;
+`Olá, ${nome} 👋`;
 
 mostrarTela("dashboardScreen");
-
 
 }
 
@@ -49,19 +138,18 @@ function logout(){
 
 if(confirm("Deseja sair?")){
 
-    localStorage.clear();
-    location.reload();
+localStorage.clear();
+location.reload();
 
 }
 
-
 }
 
-function abrirTrilha(){
+function abrirTrilha(nome){
 
+console.log("Trilha:", nome);
 
 mostrarTela("trailScreen");
-
 
 }
 
@@ -69,44 +157,41 @@ function voltarDashboard(){
 
 mostrarTela("dashboardScreen");
 
-
 }
 
 function abrirModulo(){
 
-
 mostrarTela("moduleScreen");
-
 
 }
 
 function voltarTrilha(){
 
-mostrarTela("trailScreen")
+mostrarTela("trailScreen");
 
 }
 
 function abrirQuiz(){
 
+carregarPergunta();
 
 mostrarTela("quizScreen");
-
 
 }
 
 function iniciarAula(){
 
 const barra =
-    document.getElementById("videoBar");
+document.getElementById("videoBar");
 
 const texto =
-    document.getElementById("videoPercent");
+document.getElementById("videoPercent");
 
 const botaoQuiz =
-    document.getElementById("quizBtn");
+document.getElementById("quizBtn");
 
 const botaoVideo =
-    document.getElementById("startVideoBtn");
+document.getElementById("startVideoBtn");
 
 botaoVideo.disabled = true;
 
@@ -114,113 +199,146 @@ let progresso = 0;
 
 const timer = setInterval(() => {
 
-    progresso += 2;
+progresso += 1;
 
-    barra.style.width =
-        progresso + "%";
+barra.style.width =
+progresso + "%";
 
-    texto.textContent =
-        progresso + "% assistido";
+texto.textContent =
+progresso + "% assistido";
 
-    if(progresso >= 100){
+if(progresso >= 100){
 
-        clearInterval(timer);
+clearInterval(timer);
 
-        texto.textContent =
-            "✅ Aula concluída";
+texto.textContent =
+"✅ Aula concluída";
 
-        botaoQuiz.classList.remove("hidden");
-
-    }
-
-},100);
-
+botaoQuiz.classList.remove("hidden");
 
 }
 
+},150);
+
+}
 function corrigirQuiz(){
 
-
 const resposta =
-    document.querySelector(
-        'input[name="quiz"]:checked'
-    );
+document.querySelector(
+'input[name="quiz"]:checked'
+);
 
 if(!resposta){
 
-    alert("Selecione uma alternativa.");
-    return;
+alert("Selecione uma alternativa.");
+return;
 
 }
 
-const correta = 1;
+const pergunta =
+perguntas[perguntaAtual];
 
-if(parseInt(resposta.value) === correta){
+if(
+parseInt(resposta.value) === pergunta.correta
+){
 
-    pontos += 50;
-    modulosConcluidos++;
+perguntaAtual++;
 
-    atualizarDashboard();
+if(perguntaAtual < perguntas.length){
 
-    alert(
-        "🎉 Parabéns! Você concluiu o módulo e ganhou 50 pontos."
-    );
-
-    mostrarTela("dashboardScreen");
+carregarPergunta();
 
 }else{
 
-    alert(
-        "❌ Resposta incorreta. Tente novamente."
-    );
+const concluido =
+localStorage.getItem("modulo1");
 
-}
+if(!concluido){
 
+pontos += 50;
+modulosConcluidos++;
 
-}
+localStorage.setItem(
+"modulo1",
+"concluido"
+);
 
-function atualizarDashboard(){
+localStorage.setItem(
+"pontos",
+pontos
+);
 
-
-document.getElementById("points")
-    .textContent = pontos;
-
-document.getElementById("completedModules")
-    .textContent = modulosConcluidos;
-
-let ieh = modulosConcluidos * 100;
-
-if(ieh > 100){
-
-    ieh = 100;
-
-}
-
-document.getElementById("iehValue")
-    .textContent = ieh + "%";
-
-}
-
-window.onload = () => {
-
-
-const nome =
-    localStorage.getItem("usuarioNome");
-
-if(nome){
-
-    document.getElementById("userName")
-        .textContent = nome;
-
-    document.getElementById("welcomeText")
-        .textContent =
-        `Olá, ${nome} 👋`;
-
-    mostrarTela("dashboardScreen");
+localStorage.setItem(
+"modulosConcluidos",
+modulosConcluidos
+);
 
 }
 
 atualizarDashboard();
 
+alert(
+"🎉 Você concluiu todas as perguntas!"
+);
+
+perguntaAtual = 0;
+
+mostrarTela("dashboardScreen");
 
 }
+
+}else{
+
+alert(
+"❌ Resposta incorreta. Tente novamente."
+);
+
+}
+
+}
+
+function atualizarDashboard(){
+
+document.getElementById("points")
+.textContent = pontos;
+
+document.getElementById("completedModules")
+.textContent = modulosConcluidos;
+
+let ieh =
+Math.round(
+(modulosConcluidos / totalModulos) * 100
+);
+
+if(ieh > 100){
+
+ieh = 100;
+
+}
+
+document.getElementById("iehValue")
+.textContent = ieh + "%";
+
+}
+
+window.onload = () => {
+
+const nome =
+localStorage.getItem("usuarioNome");
+
+if(nome){
+
+document.getElementById("userName")
+.textContent = nome;
+
+document.getElementById("welcomeText")
+.textContent =
+`Olá, ${nome} 👋`;
+
+mostrarTela("dashboardScreen");
+
+}
+
+atualizarDashboard();
+
+};
